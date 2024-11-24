@@ -1,139 +1,119 @@
-### Project Name: **Customer Financial Insights Prediction using ANN**
+# **Customer Financial Insights Prediction Using ANN**
+
+This project leverages Artificial Neural Networks (ANN) to predict customer financial insights based on various features. It is designed for ease of deployment with a Streamlit application and includes tools for preprocessing, training, and prediction.
 
 ---
 
-### **README**
+## **Directory Structure**
 
-#### **Problem Statement**
-The goal of this project is to predict financial insights based on customer demographic, behavioral, and financial data. By building a regression model, we aim to predict a target financial variable, allowing businesses to understand customer profiles and make data-driven decisions to enhance services.
-
----
-
-### **Overview**
-This project leverages a deep learning approach using an Artificial Neural Network (ANN) for regression tasks. The data comprises customer information, including demographic details, account activity, and financial data. A robust preprocessing pipeline ensures the data is ready for training. The ANN model predicts a target numeric variable, aiding in financial insight generation.
-
----
-
-### **Workflow**
-
-#### **1. Data Preparation**
-- **Dataset**: The dataset contains customer demographics, financial behavior, and account activity.
-- **Preprocessing Steps**:
-  - Dropped irrelevant columns (`RowNumber`, `CustomerId`, `Surname`).
-  - Encoded categorical variables:
-    - Used `LabelEncoder` for the `Gender` column.
-    - Applied `OneHotEncoder` for the `Geography` column.
-  - Combined the processed columns with the original dataset.
-  - Normalized numerical features using `StandardScaler`.
-
-#### **2. Train-Test Split**
-- Divided the data into training and testing sets in an 80-20 ratio.
-
-#### **3. Model Development**
-- Built an ANN regression model using TensorFlow/Keras.
-- The architecture includes:
-  - Input layer: Matches the number of input features.
-  - Two hidden layers with 64 and 32 neurons, using ReLU activation.
-  - Output layer with a single neuron for regression predictions.
-- Optimized the model using the Adam optimizer and evaluated it using the Mean Absolute Error (MAE).
-
-#### **4. Model Training**
-- Utilized Early Stopping to prevent overfitting by monitoring validation loss.
-- Integrated TensorBoard for logging training metrics and visualizing performance.
-
-#### **5. Model Evaluation**
-- Evaluated the model on the test set to compute test loss and MAE.
-- Saved the trained model for future inference.
+```
+customer-financial-insights-prediction-using-ann/
+│
+├── app.py                       # Main Streamlit application script
+├── churn_modelling.csv          # Dataset for training and testing
+├── experiments.ipynb            # Exploratory Data Analysis (EDA) and model experiments
+├── hyperparametertuninggsnn.ipynb # Notebook for hyperparameter tuning of ANN
+├── label_encoder_gender.pk1     # Pretrained Label Encoder for 'Gender' feature
+├── model.h5                     # Trained ANN model file in HDF5 format
+├── onehot_encoder_geo.pk1       # Pretrained One-Hot Encoder for 'Geography' feature
+├── prediction.ipynb             # Notebook to demonstrate predictions using the trained model
+├── requirements.txt             # List of Python dependencies
+├── salaryregression.ipynb       # Regression task notebook for additional experimentation
+├── scaler.pk1                   # Pretrained scaler for input data normalization
+```
 
 ---
 
-### **Setup Instructions**
+## **Project Workflow**
 
-#### **1. Prerequisites**
-- Python 3.x
-- Required Libraries:
-  - `pandas`
-  - `numpy`
-  - `scikit-learn`
-  - `tensorflow`
-  - `pickle`
-  - `datetime`
+### **1. Data Preparation**
+   - The dataset `churn_modelling.csv` contains customer-related features such as demographics, geography, and churn status.
+   - Preprocessing includes:
+     - Encoding categorical features using `label_encoder_gender.pk1` and `onehot_encoder_geo.pk1`.
+     - Scaling numerical features using `scaler.pk1`.
 
-Install required libraries using:
+### **2. Model Development**
+   - The ANN model is defined and trained using TensorFlow/Keras.
+   - Notebooks like `experiments.ipynb` provide insight into exploratory analysis and preliminary testing.
+   - `hyperparametertuninggsnn.ipynb` fine-tunes the ANN hyperparameters for improved accuracy.
+
+### **3. Prediction**
+   - The trained model (`model.h5`) predicts customer financial insights when given new input data.
+   - Predictions are showcased in `prediction.ipynb`.
+
+### **4. Deployment**
+   - The Streamlit application (`app.py`) provides an interactive interface for end-users to input customer details and get predictions.
+
+---
+
+## **Setup Instructions**
+
+### **1. Clone the Repository**
 ```bash
-pip install pandas numpy scikit-learn tensorflow
+git clone https://github.com/<your-username>/customer-financial-insights-prediction-using-ann.git
+cd customer-financial-insights-prediction-using-ann
 ```
 
-#### **2. Steps to Run**
-
-1. **Preprocessing**:
-   - Load and preprocess the dataset.
-   - Save encoders and scaler as `.pkl` files for later use.
-
-2. **Model Training**:
-   - Train the ANN regression model using the training data.
-   - Save the trained model as `regression_model.h5`.
-
-3. **Inference**:
-   - Load the saved model, encoders, and scaler.
-   - Preprocess new input data to match training features.
-   - Predict the financial target variable using the trained model.
-
----
-
-### **Directory Structure**
-```
-Customer_Financial_Insights_Prediction/
-│
-├── data/
-│   ├── Churn_Modelling.csv         # Input dataset
-│
-├── models/
-│   ├── regression_model.h5         # Trained ANN model
-│   ├── label_encoder_gender.pkl    # Gender encoder
-│   ├── onehot_encoder_geo.pkl      # Geography encoder
-│   ├── scaler.pkl                  # Feature scaler
-│
-├── logs/
-│   ├── fit/                        # TensorBoard logs
-│
-├── scripts/
-│   ├── preprocess.py               # Data preprocessing script
-│   ├── train_model.py              # Model training script
-│   ├── inference.py                # Inference script
-│
-└── README.md                       # Project description and instructions
-```
-
----
-
-### **How to Use**
-
-#### **1. Train the Model**
-Run the `train_model.py` script:
+### **2. Create a Virtual Environment**
 ```bash
-python scripts/train_model.py
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-#### **2. Make Predictions**
-Use the `inference.py` script to make predictions:
+### **3. Install Dependencies**
 ```bash
-python scripts/inference.py
+pip install -r requirements.txt
+```
+
+### **4. Run the Application**
+```bash
+streamlit run app.py
 ```
 
 ---
 
-### **Key Features**
-- Preprocessing pipeline for handling categorical and numerical data.
-- ANN model architecture optimized for regression tasks.
-- Saved preprocessing objects (encoders, scaler) for consistent inference.
-- TensorBoard integration for training monitoring.
+## **Features**
+- **Data Preprocessing:**  
+  - Automated handling of categorical and numerical data using pretrained encoders and scalers.
+  
+- **Model Training:**  
+  - Customizable ANN model built with TensorFlow/Keras.
+  - Hyperparameter tuning support using Grid Search or Random Search.
+
+- **User-Friendly Deployment:**  
+  - Streamlit-powered interactive web application for real-time predictions.
 
 ---
 
-### **Future Enhancements**
-- Experiment with additional features or feature engineering for improved predictions.
-- Optimize model hyperparameters using grid search or random search.
-- Extend the pipeline for real-time predictions with a user-friendly interface.
+## **Dependencies**
+The required Python libraries are listed in `requirements.txt`. Key dependencies include:
+- TensorFlow
+- Streamlit
+- Scikit-learn
+- Pandas
+- NumPy
 
---- 
+To ensure smooth execution, ensure your Python version is compatible with the required TensorFlow version. For TensorFlow 2.15.0, Python 3.8-3.11 is recommended.
+
+---
+
+## **Usage**
+
+1. Launch the Streamlit application using `streamlit run app.py`.
+2. Upload or input customer details via the interface.
+3. Get predictions and insights on customer financial behavior.
+
+---
+
+## **Limitations**
+- The model's performance depends on the quality of input data.
+- Ensure the Python version aligns with TensorFlow compatibility to avoid installation errors.
+
+---
+
+## **Future Enhancements**
+- Integration of advanced deep learning techniques like LSTM or GRU for temporal data.
+- Enhanced deployment options using Docker or cloud platforms.
+- More robust hyperparameter tuning pipelines with frameworks like Optuna.
+
+---
